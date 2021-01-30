@@ -7,6 +7,8 @@ namespace DummyService.Identity
     public class CustomClaimsAuthorizationManager : ClaimsAuthorizationManager
     {
         private const string ACTION_PREFIX = "http://tempuri.org/IMyService/";
+        private const string ROLE_TYPE = "http://schemas.microsoft.com/ws/2008/06/identity/claims/role";
+
         public override bool CheckAccess(AuthorizationContext context)
         {
             // Authentication check
@@ -22,7 +24,7 @@ namespace DummyService.Identity
 
         private string[] GetRoles(IEnumerable<Claim> claims)
         {
-            var roleClaims = claims.Where(c => c.Type == "http://schemas.microsoft.com/ws/2008/06/identity/claims/role");
+            var roleClaims = claims.Where(c => c.Type == ROLE_TYPE);
             if (roleClaims.Any())
             {
                 var roles = string.Join(";", roleClaims.Select(c => c.Value)).Split(';');
