@@ -18,10 +18,10 @@ namespace ConsoleClient
         public static void Main(string[] args)
         {
             WriteLine("ADMIN USER ---------------------", ConsoleColor.Blue);
-            CallMyService(GetJwt(Config.AdminName, Config.AdminPassword));
+            CallMyService(GetJwtUserAccount(Config.AdminName, Config.AdminPassword));
 
             WriteLine("COMMON USER --------------------", ConsoleColor.Blue);
-            CallMyService(GetJwt(Config.UserName, Config.UserPassword));
+            CallMyService(GetJwtUserAccount(Config.UserName, Config.UserPassword));
 
             WriteLine("SERVICE PRINCIPAL --------------", ConsoleColor.Blue);
             CallMyService(GetJwtServicePrincipal());
@@ -123,7 +123,7 @@ namespace ConsoleClient
             return xmlToken;
         }
 
-        private static string GetJwt(string userName, string password)
+        private static string GetJwtUserAccount(string userName, string password)
         {
             var oauth2Client = new TokenClient(Config.AzureADTokenEndpoint, Config.AppId, Config.AppSecret);
 
@@ -156,6 +156,7 @@ namespace ConsoleClient
             return token.access_token;
 
         }
+
 
         private static void WriteLine(string value, ConsoleColor fgColor)
         {
